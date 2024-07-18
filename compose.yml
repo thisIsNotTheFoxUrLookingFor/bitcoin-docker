@@ -1,0 +1,12 @@
+services:
+  bitcoind:
+    container_name: bitcoind
+    image: bitcoind:latest
+    build:
+      context: .
+      network: host
+      dockerfile: ./Dockerfile
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./config:/config:ro
