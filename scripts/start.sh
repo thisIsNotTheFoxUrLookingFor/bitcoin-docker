@@ -1,2 +1,2 @@
 #!/bin/bash
-sh /config/init.sh
+exec sh /config/init.sh
