@@ -12,6 +12,5 @@ services:
     restart: unless-stopped
     volumes:
       - ./config:/config:ro
-      - ./config/tor:/tor:rw
       - /mnt/raid-pool/blockchains/Bitcoin:/bitcoin:rw
 networks: {}
