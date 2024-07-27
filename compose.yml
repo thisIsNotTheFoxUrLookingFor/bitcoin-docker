@@ -1,14 +1,17 @@
 services:
-  bitcoind:
-    container_name: bitcoind
-    image: bitcoind:latest
+  bitcoin:
+    container_name: bitcoin
     build:
       context: .
       network: host
       dockerfile: ./Dockerfile
+    stop_grace_period: 70s
+    stop_signal: SIGTERM
+    image: farfoxachedocker/bitcoin:latest
     network_mode: host
     restart: unless-stopped
-    stop_grace_period: 30m1s
-    stop_signal: SIGTERM
     volumes:
       - ./config:/config:ro
+      - ./config/tor:/tor:rw
+      - /mnt/raid-pool/blockchains/Bitcoin:/bitcoin:rw
+networks: {}
