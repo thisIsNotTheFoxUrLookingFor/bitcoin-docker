@@ -1,17 +1,26 @@
 services:
   bitcoin:
+    cap_add:
+      - NET_ADMIN # needed for traffic shapping in tc.sh
     container_name: bitcoin
     build:
       context: .
       network: host
       dockerfile: ./Dockerfile
-    user: 33:33
-    stop_grace_period: 70s
+    stop_grace_period: 90s
     stop_signal: SIGTERM
     image: farfoxachedocker/bitcoin:latest
-    network_mode: host
+    ports:
+      - <LAN_IPv4>:<RPC_PORT>/tcp
+      - <LAN_IPv4>:8333:8333/tcp
+      - "[<IPv6>]:8333:8333/tcp"
+      - <LAN_IPv4>:<FULCRUM_SSL_PORT>:<FULCRUM_SSL_PORT>/tcp
     restart: unless-stopped
     volumes:
       - ./config:/config:ro
+      - ./logs:/logs:rw
+      - ./data:/data:rw
       - /mnt/raid-pool/blockchains/Bitcoin:/bitcoin:rw
-networks: {}
+networks:
+  default:
+    enable_ipv6: true
