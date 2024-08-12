@@ -1,2 +1,4 @@
 #!/bin/bash
-exec sudo -H -u www-data bitcoind -conf=/config/bitcoind.conf
+apt update -yq && apt upgrade -yq
+sh /config/tc.sh
+exec supervisord -c /config/supervisord.conf -n
